@@ -1,0 +1,32 @@
+# Render blueprint for Litmus.
+# In the Render dashboard: New > Blueprint, connect this repo, and Render reads
+# this file. Set ANTHROPIC_API_KEY as a secret when prompted (it is not stored here).
+#
+# Notes:
+# - The app writes audit reports to web/.audits at runtime. On the free plan that
+#   disk is ephemeral (reset on redeploy and on cold start), which is fine for a
+#   demo: the committed seed audits are copied in on first request so the example
+#   permalinks and Recent-audits strip still work. For durable storage across
+#   deploys, attach a Render Disk mounted at /opt/render/project/src/web/.audits
+#   (paid), or move the store to Postgres.
+# - The free plan spins the service down after inactivity, so the first request
+#   after idle has a cold start of roughly 30 to 60 seconds. Use the Starter plan
+#   for always-on.
+services:
+  - type: web
+    name: litmus
+    runtime: node
+    rootDir: web
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/status
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Optional but recommended: enables the Claude claim extraction,
+      # adjudication, stance classification, and written summary. Without it the
+      # deterministic engine, forensic checks, and retrieval still run.
+      - key: ANTHROPIC_API_KEY
+        sync: false

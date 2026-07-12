@@ -1,0 +1,22 @@
+# AWS App Runner source configuration (no Docker path).
+# Use this if you connect the GitHub repo directly to App Runner instead of
+# pushing a container image. Set the "Source directory" to `web` in the console.
+#
+# Note on Node: App Runner's managed Node runtime may lag behind what Next.js 16
+# wants. If a source build fails on the Node version, use the container path in
+# DEPLOY.md instead (the Dockerfile pins Node 22 and is the reliable option).
+version: 1.0
+runtime: nodejs18
+build:
+  commands:
+    build:
+      - npm ci && npm run build
+run:
+  command: npm start
+  network:
+    port: 3000
+  env:
+    - name: NODE_ENV
+      value: production
+    - name: HOSTNAME
+      value: 0.0.0.0

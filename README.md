@@ -107,6 +107,10 @@ Everything is tunable through environment variables, documented in `web/.env.loc
 
 The forensic checks, calibration, retrieval, grounding guard, and provenance are real and reproducible. Two things are worth stating plainly. First, ingestion today leans on titles and abstracts for many closed-access papers, so for those the verdict rests more on literature corroboration than on recomputing the paper's own numbers; when full text is not available, the report says so. Second, the real labeled evaluation is deliberately small and skewed toward clear cases, which is why it is framed as a sanity-check floor and shown with confidence intervals rather than as a headline accuracy claim. The synthetic 500-paper set is labeled as a calibration harness throughout and is not a claim about real-paper performance.
 
+## Deploying
+
+Litmus needs a running Node server, not a static host. `web/Dockerfile` produces a small standalone container that runs anywhere, and `web/seed-audits/` is copied into the runtime store on first request so example permalinks work on a fresh instance. See `DEPLOY.md` for step by step instructions for AWS App Runner (container or source), AWS Lightsail, and Render (a `render.yaml` blueprint is included). Set `ANTHROPIC_API_KEY` as a secret on whichever platform you use.
+
 ## Tech
 
 TypeScript throughout. Next.js 16 (App Router, Turbopack) and React 19 for the app, Tailwind v4 for styling, Vitest for the test suite (61 tests), and the Anthropic SDK behind an injectable seam so the whole pipeline is testable with a mock and degrades gracefully when a model call fails.

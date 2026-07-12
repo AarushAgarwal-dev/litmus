@@ -14,6 +14,31 @@ import { hash } from "./ingest/fetch";
 
 const DIR = path.join(process.cwd(), ".audits");
 const WATCHLIST = path.join(DIR, "watchlist.json");
+// Committed showcase reports, copied into the runtime store on first use so a
+// fresh deployment (ephemeral disk) still serves the example permalinks and the
+// Recent-audits strip without having to re-run any audits.
+const SEED_DIR = path.join(process.cwd(), "seed-audits");
+let seeded = false;
+
+async function ensureSeeded(): Promise<void> {
+  if (seeded) return;
+  seeded = true;
+  try {
+    await fs.mkdir(DIR, { recursive: true });
+    const files = await fs.readdir(SEED_DIR).catch(() => [] as string[]);
+    for (const f of files) {
+      if (!f.endsWith(".json")) continue;
+      const dest = path.join(DIR, f);
+      try {
+        await fs.access(dest); // already present: never overwrite live audits
+      } catch {
+        await fs.copyFile(path.join(SEED_DIR, f), dest).catch(() => {});
+      }
+    }
+  } catch {
+    /* best-effort seed; never break an audit over it */
+  }
+}
 
 function summarize(id: string, report: AuditReport): AuditSummary {
   return {
@@ -42,6 +67,7 @@ export async function saveReport(id: string, report: AuditReport): Promise<void>
 
 export async function getReport(id: string): Promise<AuditReport | null> {
   try {
+    await ensureSeeded();
     const safe = id.replace(/[^a-z0-9-]/gi, "");
     const raw = await fs.readFile(path.join(DIR, `${safe}.json`), "utf8");
     return JSON.parse(raw) as AuditReport;
@@ -52,6 +78,7 @@ export async function getReport(id: string): Promise<AuditReport | null> {
 
 export async function listRecent(limit = 12): Promise<AuditSummary[]> {
   try {
+    await ensureSeeded();
     const files = await fs.readdir(DIR);
     const jsons = files.filter((f) => f.endsWith(".json") && f !== "watchlist.json");
     const withStat = await Promise.all(
