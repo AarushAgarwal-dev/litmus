@@ -30,6 +30,10 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/seed-audits ./seed-audits
 
+# A writable audit dir so audits run on the server can persist for the life of
+# the instance. Seeded reports are served straight from ./seed-audits regardless.
+RUN mkdir -p /app/.audits && chown -R nextjs:nodejs /app/.audits
+
 USER nextjs
 EXPOSE 3000
 CMD ["node", "server.js"]

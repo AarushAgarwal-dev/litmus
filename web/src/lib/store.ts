@@ -18,25 +18,19 @@ const WATCHLIST = path.join(DIR, "watchlist.json");
 // fresh deployment (ephemeral disk) still serves the example permalinks and the
 // Recent-audits strip without having to re-run any audits.
 const SEED_DIR = path.join(process.cwd(), "seed-audits");
-let seeded = false;
+// The live store (.audits) is searched first; the committed seed reports are the
+// fallback. Reading the seed directly (instead of copying it into .audits on
+// startup) means the example permalinks and Recent strip work even when the
+// runtime disk is read-only or not writable by the app user, which is the case
+// in many containers (a non-root user cannot create /app/.audits).
+const STORES = [DIR, SEED_DIR];
 
-async function ensureSeeded(): Promise<void> {
-  if (seeded) return;
-  seeded = true;
+async function readReportFrom(dir: string, safeId: string): Promise<AuditReport | null> {
   try {
-    await fs.mkdir(DIR, { recursive: true });
-    const files = await fs.readdir(SEED_DIR).catch(() => [] as string[]);
-    for (const f of files) {
-      if (!f.endsWith(".json")) continue;
-      const dest = path.join(DIR, f);
-      try {
-        await fs.access(dest); // already present: never overwrite live audits
-      } catch {
-        await fs.copyFile(path.join(SEED_DIR, f), dest).catch(() => {});
-      }
-    }
+    const raw = await fs.readFile(path.join(dir, `${safeId}.json`), "utf8");
+    return JSON.parse(raw) as AuditReport;
   } catch {
-    /* best-effort seed; never break an audit over it */
+    return null;
   }
 }
 
@@ -66,38 +60,44 @@ export async function saveReport(id: string, report: AuditReport): Promise<void>
 }
 
 export async function getReport(id: string): Promise<AuditReport | null> {
-  try {
-    await ensureSeeded();
-    const safe = id.replace(/[^a-z0-9-]/gi, "");
-    const raw = await fs.readFile(path.join(DIR, `${safe}.json`), "utf8");
-    return JSON.parse(raw) as AuditReport;
-  } catch {
-    return null;
+  const safe = id.replace(/[^a-z0-9-]/gi, "");
+  for (const dir of STORES) {
+    const r = await readReportFrom(dir, safe);
+    if (r) return r;
   }
+  return null;
 }
 
 export async function listRecent(limit = 12): Promise<AuditSummary[]> {
-  try {
-    await ensureSeeded();
-    const files = await fs.readdir(DIR);
-    const jsons = files.filter((f) => f.endsWith(".json") && f !== "watchlist.json");
-    const withStat = await Promise.all(
-      jsons.map(async (f) => ({ f, m: (await fs.stat(path.join(DIR, f))).mtimeMs })),
-    );
-    withStat.sort((a, b) => b.m - a.m);
-    const out: AuditSummary[] = [];
-    for (const { f } of withStat.slice(0, limit)) {
+  // Merge live audits and committed seeds. Live audits are read first, so they
+  // win on an id collision; both are sorted together by modification time.
+  const seen = new Set<string>();
+  const rows: { id: string; m: number; report: AuditReport }[] = [];
+  for (const dir of STORES) {
+    let files: string[] = [];
+    try {
+      files = await fs.readdir(dir);
+    } catch {
+      continue;
+    }
+    for (const f of files) {
+      if (!f.endsWith(".json") || f === "watchlist.json") continue;
+      const id = f.replace(/\.json$/, "");
+      if (seen.has(id)) continue;
+      seen.add(id);
       try {
-        const raw = await fs.readFile(path.join(DIR, f), "utf8");
-        out.push(summarize(f.replace(/\.json$/, ""), JSON.parse(raw)));
+        const [stat, raw] = await Promise.all([
+          fs.stat(path.join(dir, f)),
+          fs.readFile(path.join(dir, f), "utf8"),
+        ]);
+        rows.push({ id, m: stat.mtimeMs, report: JSON.parse(raw) as AuditReport });
       } catch {
         /* skip corrupt entries */
       }
     }
-    return out;
-  } catch {
-    return [];
   }
+  rows.sort((a, b) => b.m - a.m);
+  return rows.slice(0, limit).map((r) => summarize(r.id, r.report));
 }
 
 /* ---------------- watchlist ---------------- */
