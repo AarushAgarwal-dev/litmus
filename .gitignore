@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+**/node_modules/
+.pnp
+.pnp.*
+
+# Builds and caches
+**/.next/
+web/out/
+web/build/
+litmus-mcp/dist/
+**/*.tsbuildinfo
+**/coverage/
+
+# Secrets: never commit real env files. The .env.local.example is kept on purpose.
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Runtime state (regenerate with `npm run prewarm`)
+web/.audits/
+**/.audits/
+
+# Claude Code local config, scratch, and transcripts
+.claude/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+*.pem
+*.log
+npm-debug.log*
+yarn-error.log*

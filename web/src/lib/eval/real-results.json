@@ -1,0 +1,417 @@
+{
+  "generatedAt": "2026-07-12T19:51:39.422Z",
+  "finishedAt": "2026-07-12T20:07:44.126Z",
+  "baseUrl": "http://localhost:3000",
+  "engineNote": "Live production pipeline (Claude adjudication + deterministic checks + multi-source retrieval + retraction detection).",
+  "config": {
+    "maxClaims": "5",
+    "tokAdjudicate": "5000",
+    "ensemble": "single"
+  },
+  "metrics": {
+    "n": 24,
+    "nUnresolved": 0,
+    "positives": 8,
+    "negatives": 16,
+    "auc": 1,
+    "brier": 0.06000127896969734,
+    "ece": 0.19361446799770615,
+    "reliability": [
+      {
+        "lo": 0,
+        "hi": 0.2,
+        "meanPred": 0.062127646552992216,
+        "fracPos": 0,
+        "count": 9
+      },
+      {
+        "lo": 0.2,
+        "hi": 0.4,
+        "meanPred": 0.3103767257881626,
+        "fracPos": 0,
+        "count": 3
+      },
+      {
+        "lo": 0.4,
+        "hi": 0.6,
+        "meanPred": 0.4244985911474646,
+        "fracPos": 0,
+        "count": 4
+      },
+      {
+        "lo": 0.6,
+        "hi": 0.8,
+        "meanPred": 0.7092740683115814,
+        "fracPos": 1,
+        "count": 3
+      },
+      {
+        "lo": 0.8,
+        "hi": 1,
+        "meanPred": 0.8827407848103167,
+        "fracPos": 1,
+        "count": 5
+      }
+    ],
+    "prAt50": {
+      "threshold": 0.5,
+      "tp": 8,
+      "fp": 0,
+      "tn": 16,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "accuracy": 1
+    },
+    "byClass": {
+      "retracted": {
+        "n": 7,
+        "meanLikelihood": 0.03
+      },
+      "failed-replication": {
+        "n": 9,
+        "meanLikelihood": 0.33091926232569735
+      },
+      "robust": {
+        "n": 8,
+        "meanLikelihood": 0.8176907661232911
+      }
+    },
+    "ci": {
+      "auc": {
+        "lo": 1,
+        "hi": 1
+      },
+      "brier": {
+        "lo": 0.032,
+        "hi": 0.089
+      },
+      "ece": {
+        "lo": 0.136,
+        "hi": 0.258
+      }
+    },
+    "stability": {
+      "checked": 3,
+      "agreement": 1,
+      "runs": [
+        {
+          "doi": "10.1016/S0140-6736(97)11096-0",
+          "band1": "unsupported",
+          "band2": "unsupported",
+          "likelihood1": 0.03,
+          "likelihood2": 0.03,
+          "sameBand": true
+        },
+        {
+          "doi": "10.1037/0022-3514.74.5.1252",
+          "band1": "mixed",
+          "band2": "mixed",
+          "likelihood1": 0.4020296607372879,
+          "likelihood2": 0.4331935618180787,
+          "sameBand": true
+        },
+        {
+          "doi": "10.1126/science.1225829",
+          "band1": "robust",
+          "band2": "robust",
+          "likelihood1": 0.9310103383813946,
+          "likelihood2": 0.9310103383813946,
+          "sameBand": true
+        }
+      ]
+    }
+  },
+  "cases": [
+    {
+      "doi": "10.1016/S0140-6736(97)11096-0",
+      "label": "Wakefield et al. — MMR and autism",
+      "cls": "retracted",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.03,
+      "band": "unsupported",
+      "retracted": true,
+      "auditId": "jun58v-t",
+      "error": null
+    },
+    {
+      "doi": "10.1126/science.1256151",
+      "label": "LaCour & Green — canvassing and attitude change",
+      "cls": "retracted",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.03,
+      "band": "unsupported",
+      "retracted": true,
+      "auditId": "1vwk3z6-n",
+      "error": null
+    },
+    {
+      "doi": "10.1016/S0140-6736(20)31180-6",
+      "label": "Mehra et al. — hydroxychloroquine (Surgisphere)",
+      "cls": "retracted",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.03,
+      "band": "unsupported",
+      "retracted": true,
+      "auditId": "kq2szh-t",
+      "error": null
+    },
+    {
+      "doi": "10.1056/NEJMoa2007621",
+      "label": "Mehra et al. — cardiovascular disease & COVID (Surgisphere)",
+      "cls": "retracted",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.03,
+      "band": "unsupported",
+      "retracted": true,
+      "auditId": "1vp7w1x-l",
+      "error": null
+    },
+    {
+      "doi": "10.1038/nature12968",
+      "label": "Obokata et al. — STAP cells (article)",
+      "cls": "retracted",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.03,
+      "band": "unsupported",
+      "retracted": true,
+      "auditId": "2uos6a-j",
+      "error": null
+    },
+    {
+      "doi": "10.1038/nature12969",
+      "label": "Obokata et al. — STAP cells (letter)",
+      "cls": "retracted",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.03,
+      "band": "unsupported",
+      "retracted": true,
+      "auditId": "34odv9-j",
+      "error": null
+    },
+    {
+      "doi": "10.1126/science.1094515",
+      "label": "Hwang et al. — patient-specific stem cells",
+      "cls": "retracted",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.03,
+      "band": "unsupported",
+      "retracted": true,
+      "auditId": "1h40upy-n",
+      "error": null
+    },
+    {
+      "doi": "10.1037/0022-3514.74.5.1252",
+      "label": "Baumeister et al. — ego depletion",
+      "cls": "failed-replication",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.4020296607372879,
+      "band": "mixed",
+      "retracted": false,
+      "auditId": "1jfpewm-r",
+      "error": null
+    },
+    {
+      "doi": "10.1177/0956797610383437",
+      "label": "Carney, Cuddy & Yap — power posing",
+      "cls": "failed-replication",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.20947805852401288,
+      "band": "fragile",
+      "retracted": false,
+      "auditId": "kqr52d-o",
+      "error": null
+    },
+    {
+      "doi": "10.1037/a0021524",
+      "label": "Bem — feeling the future (precognition)",
+      "cls": "failed-replication",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.15316518254643147,
+      "band": "fragile",
+      "retracted": false,
+      "auditId": "1u0j415-g",
+      "error": null
+    },
+    {
+      "doi": "10.1037/0022-3514.71.2.230",
+      "label": "Bargh, Chen & Burrows — elderly priming",
+      "cls": "failed-replication",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.32935383187367073,
+      "band": "fragile",
+      "retracted": false,
+      "auditId": "iozw65-q",
+      "error": null
+    },
+    {
+      "doi": "10.1126/science.1130726",
+      "label": "Zhong & Liljenquist — cleanliness / Macbeth effect",
+      "cls": "failed-replication",
+      "outcome": 0,
+      "hard": false,
+      "likelihood": 0.4388611352896457,
+      "band": "mixed",
+      "retracted": false,
+      "auditId": "1rkzlr1-n",
+      "error": null
+    },
+    {
+      "doi": "10.1126/science.1225829",
+      "label": "Jinek et al. — CRISPR-Cas9 programmable cleavage",
+      "cls": "robust",
+      "outcome": 1,
+      "hard": false,
+      "likelihood": 0.9310103383813946,
+      "band": "robust",
+      "retracted": false,
+      "auditId": "1os031w-n",
+      "error": null
+    },
+    {
+      "doi": "10.1016/j.cell.2006.07.024",
+      "label": "Takahashi & Yamanaka — induced pluripotent stem cells",
+      "cls": "robust",
+      "outcome": 1,
+      "hard": false,
+      "likelihood": 0.8507484148821206,
+      "band": "robust",
+      "retracted": false,
+      "auditId": "1no4g7g-q",
+      "error": null
+    },
+    {
+      "doi": "10.1103/PhysRevLett.116.061102",
+      "label": "Abbott et al. (LIGO) — gravitational waves (GW150914)",
+      "cls": "robust",
+      "outcome": 1,
+      "hard": false,
+      "likelihood": 0.9310103383813946,
+      "band": "robust",
+      "retracted": false,
+      "auditId": "93az7m-u",
+      "error": null
+    },
+    {
+      "doi": "10.1038/nature14539",
+      "label": "LeCun, Bengio & Hinton — deep learning",
+      "cls": "robust",
+      "outcome": 1,
+      "hard": false,
+      "likelihood": 0.7272718863441752,
+      "band": "robust",
+      "retracted": false,
+      "auditId": "19hckye-j",
+      "error": null
+    },
+    {
+      "doi": "10.1038/s41586-020-2649-2",
+      "label": "Harris et al. — array programming with NumPy",
+      "cls": "robust",
+      "outcome": 1,
+      "hard": false,
+      "likelihood": 0.8645577461537016,
+      "band": "robust",
+      "retracted": false,
+      "auditId": "14atp0s-p",
+      "error": null
+    },
+    {
+      "doi": "10.7554/eLife.50342",
+      "label": "Lyashenko et al. — receptor-based relative sensing",
+      "cls": "robust",
+      "outcome": 1,
+      "hard": false,
+      "likelihood": 0.6208206005549312,
+      "band": "robust",
+      "retracted": false,
+      "auditId": "1hcg1sv-j",
+      "error": null
+    },
+    {
+      "doi": "10.1016/j.cell.2009.03.017",
+      "label": "Scholl et al. — STK33 / KRAS synthetic lethality",
+      "cls": "failed-replication",
+      "outcome": 0,
+      "hard": true,
+      "likelihood": 0.19598363643049843,
+      "band": "fragile",
+      "retracted": false,
+      "auditId": "lpq9wt-q",
+      "error": null
+    },
+    {
+      "doi": "10.1111/j.1467-9280.2008.02227.x",
+      "label": "Schnall, Benton & Harvey — cleanliness and moral judgment",
+      "cls": "failed-replication",
+      "outcome": 0,
+      "hard": true,
+      "likelihood": 0.4130679785687248,
+      "band": "mixed",
+      "retracted": false,
+      "auditId": "gswmpe-w",
+      "error": null
+    },
+    {
+      "doi": "10.1037/0022-3514.54.5.768",
+      "label": "Strack, Martin & Stepper — facial feedback",
+      "cls": "failed-replication",
+      "outcome": 0,
+      "hard": true,
+      "likelihood": 0.4440355899942,
+      "band": "mixed",
+      "retracted": false,
+      "auditId": "16rpluv-q",
+      "error": null
+    },
+    {
+      "doi": "10.1126/science.1132491",
+      "label": "Vohs, Mead & Goode — the psychological consequences of money",
+      "cls": "failed-replication",
+      "outcome": 0,
+      "hard": true,
+      "likelihood": 0.39229828696680424,
+      "band": "mixed",
+      "retracted": false,
+      "auditId": "8fjhs-n",
+      "error": null
+    },
+    {
+      "doi": "10.1126/science.185.4157.1124",
+      "label": "Tversky & Kahneman — judgment under uncertainty (anchoring)",
+      "cls": "robust",
+      "outcome": 1,
+      "hard": true,
+      "likelihood": 0.7797297180356378,
+      "band": "robust",
+      "retracted": false,
+      "auditId": "eov6ba-t",
+      "error": null
+    },
+    {
+      "doi": "10.2307/1914185",
+      "label": "Kahneman & Tversky — prospect theory",
+      "cls": "robust",
+      "outcome": 1,
+      "hard": true,
+      "likelihood": 0.8363770862529722,
+      "band": "robust",
+      "retracted": false,
+      "auditId": "udns96-f",
+      "error": null
+    }
+  ],
+  "unresolved": []
+}

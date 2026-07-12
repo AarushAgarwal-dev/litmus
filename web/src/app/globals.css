@@ -1,0 +1,440 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Litmus, design system
+   Warm editorial palette, one confident clay accent, hairline
+   borders. Built to read like a considered product, not a
+   dashboard template.
+   ============================================================ */
+
+@theme {
+  /* Surfaces, warm paper, never stark white */
+  --color-paper: #faf9f5;
+  --color-paper-2: #f4f1e9;
+  --color-paper-3: #efeade;
+  --color-card: #ffffff;
+
+  /* Ink */
+  --color-ink: #1a1813;
+  --color-ink-2: #3a362d;
+  --color-muted: #6c675b;
+  --color-faint: #98927f;
+
+  /* Lines */
+  --color-line: #e8e2d3;
+  --color-line-2: #dcd4c1;
+  --color-line-3: #cfc6ae;
+
+  /* Clay, the one accent */
+  --color-clay: #be5b3e;
+  --color-clay-ink: #9c4429;
+  --color-clay-wash: #f4e6de;
+  --color-clay-line: #e3c3b2;
+
+  /* Semantic, tuned to sit beside clay, not fight it */
+  --color-sage: #4f6f52;
+  --color-sage-wash: #e7ede2;
+  --color-amber: #a06a12;
+  --color-amber-wash: #f3e9d3;
+  --color-brick: #a83a2b;
+  --color-brick-wash: #f2ddd8;
+  --color-slate: #47607a;
+  --color-slate-wash: #e4eaf0;
+
+  /* Data-viz categorical (harmonized, muted, editorial) */
+  --color-v1: #be5b3e;
+  --color-v2: #45617a;
+  --color-v3: #6d8b58;
+  --color-v4: #b0863a;
+  --color-v5: #7a5a72;
+  --color-v6: #3f7d78;
+
+  /* Type */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, "SFMono-Regular", monospace;
+
+  /* Radii */
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+
+  /* Elevation, barely-there, warm-tinted */
+  --shadow-xs: 0 1px 2px rgba(60, 48, 30, 0.05);
+  --shadow-sm: 0 1px 3px rgba(60, 48, 30, 0.06), 0 1px 2px rgba(60, 48, 30, 0.04);
+  --shadow-md: 0 6px 20px -8px rgba(60, 48, 30, 0.14), 0 2px 6px -2px rgba(60, 48, 30, 0.08);
+  --shadow-lg: 0 24px 60px -18px rgba(50, 38, 22, 0.22);
+}
+
+/* ---------- dark theme ----------
+   Warm dark (never pure black), cream ink, brightened accents. Because every
+   surface reads its color from a CSS variable, overriding them here re-themes
+   the whole app. `data-theme` is set before paint by an inline script. */
+
+:root[data-theme="dark"] {
+  --color-paper: #17140e;
+  --color-paper-2: #1e1a12;
+  --color-paper-3: #262016;
+  --color-card: #201c14;
+
+  --color-ink: #f1ece0;
+  --color-ink-2: #d3ccbb;
+  --color-muted: #a09884;
+  --color-faint: #766d59;
+
+  --color-line: #322c20;
+  --color-line-2: #40392a;
+  --color-line-3: #534937;
+
+  --color-clay: #d97a57;
+  --color-clay-ink: #ec9d7b;
+  --color-clay-wash: #2f2016;
+  --color-clay-line: #5c3a28;
+
+  --color-sage: #83a382;
+  --color-sage-wash: #1d2a1d;
+  --color-amber: #cf9c42;
+  --color-amber-wash: #2b2310;
+  --color-brick: #dc7362;
+  --color-brick-wash: #301a16;
+  --color-slate: #8ba4bd;
+  --color-slate-wash: #1a2531;
+
+  --color-v1: #d97a57;
+  --color-v2: #6f92b6;
+  --color-v3: #8fb073;
+  --color-v4: #cba85a;
+  --color-v5: #a488a0;
+  --color-v6: #59a8a2;
+
+  --shadow-md: 0 6px 22px -8px rgba(0, 0, 0, 0.5), 0 2px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 24px 60px -18px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- base ---------- */
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv05", "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.006em;
+}
+
+::selection {
+  background: var(--color-clay-wash);
+  color: var(--color-clay-ink);
+}
+
+/* Warm, thin scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-3) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-line-2);
+  border-radius: 999px;
+  border: 3px solid var(--color-paper);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-line-3);
+}
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ---------- type scale ---------- */
+
+.display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  font-optical-sizing: auto;
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum", "zero";
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 560;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-clay-ink);
+}
+
+.overline {
+  font-size: 0.68rem;
+  font-weight: 560;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+/* ---------- components ---------- */
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-quiet {
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+}
+
+.hairline {
+  border-color: var(--color-line);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 0.925rem;
+  line-height: 1;
+  border-radius: 999px;
+  padding: 0.72rem 1.25rem;
+  transition: transform 0.14s ease, background 0.18s ease, border-color 0.18s ease,
+    box-shadow 0.18s ease, color 0.18s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+.btn:active {
+  transform: translateY(0.5px) scale(0.994);
+}
+.btn-primary {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 1px solid var(--color-ink);
+}
+.btn-primary:hover {
+  background: #000;
+  box-shadow: var(--shadow-md);
+}
+.btn-clay {
+  background: var(--color-clay);
+  color: #fff;
+  border: 1px solid var(--color-clay);
+}
+.btn-clay:hover {
+  background: var(--color-clay-ink);
+  box-shadow: 0 8px 24px -10px rgba(158, 68, 41, 0.55);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-line-2);
+}
+.btn-ghost:hover {
+  background: var(--color-card);
+  border-color: var(--color-line-3);
+  box-shadow: var(--shadow-xs);
+}
+.btn-sm {
+  padding: 0.5rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+/* Pills / badges */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 520;
+  letter-spacing: 0.005em;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.pill-neutral {
+  background: var(--color-paper-2);
+  border-color: var(--color-line);
+  color: var(--color-muted);
+}
+.pill-clay {
+  background: var(--color-clay-wash);
+  border-color: var(--color-clay-line);
+  color: var(--color-clay-ink);
+}
+.pill-sage {
+  background: var(--color-sage-wash);
+  border-color: color-mix(in srgb, var(--color-sage) 24%, transparent);
+  color: var(--color-sage);
+}
+.pill-amber {
+  background: var(--color-amber-wash);
+  border-color: color-mix(in srgb, var(--color-amber) 26%, transparent);
+  color: var(--color-amber);
+}
+.pill-brick {
+  background: var(--color-brick-wash);
+  border-color: color-mix(in srgb, var(--color-brick) 26%, transparent);
+  color: var(--color-brick);
+}
+.pill-slate {
+  background: var(--color-slate-wash);
+  border-color: color-mix(in srgb, var(--color-slate) 24%, transparent);
+  color: var(--color-slate);
+}
+
+/* A hairline rule with warm gradient fade */
+.rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-line-2) 12%,
+    var(--color-line-2) 88%,
+    transparent
+  );
+  border: 0;
+}
+
+/* Grain / paper texture overlay hook (very subtle) */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: radial-gradient(
+    var(--color-line-2) 0.5px,
+    transparent 0.5px
+  );
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
+}
+
+/* Link underline that grows */
+.link-ul {
+  background-image: linear-gradient(var(--color-clay), var(--color-clay));
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease;
+  padding-bottom: 1px;
+}
+.link-ul:hover {
+  background-size: 100% 1.5px;
+}
+
+/* Reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(9px);
+  transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Marker highlight for evidence spans */
+mark.evi {
+  background: var(--color-clay-wash);
+  color: var(--color-clay-ink);
+  border-radius: 3px;
+  padding: 0.05em 0.18em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.gauge-track {
+  fill: none;
+  stroke: var(--color-line-2);
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Pulse used when jumping between a check and its source span. */
+@keyframes flashpulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  25% {
+    box-shadow: 0 0 0 3px var(--color-clay);
+  }
+}
+.flash {
+  animation: flashpulse 1.1s ease 1;
+  border-radius: 6px;
+}
+
+/* Utility: fine kern for big serif numerals */
+.num-tight {
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.02em;
+}

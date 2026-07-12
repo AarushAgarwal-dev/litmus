@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "litmus": {
+      "command": "node",
+      "args": ["litmus-mcp/dist/index.js"],
+      "env": {
+        "LITMUS_URL": "http://localhost:3000"
+      }
+    }
+  }
+}

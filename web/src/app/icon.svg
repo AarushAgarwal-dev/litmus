@@ -1,0 +1,29 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="well">
+      <circle cx="256" cy="256" r="137" />
+    </clipPath>
+    <linearGradient id="litmus" x1="128" y1="410" x2="384" y2="150" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a24a2f" />
+      <stop offset="0.6" stop-color="#be5b3e" />
+      <stop offset="1" stop-color="#cc6a48" />
+    </linearGradient>
+  </defs>
+
+  <!-- warm ink tile -->
+  <rect width="512" height="512" rx="116" fill="#1a1813" />
+
+  <!-- clay 'litmus' liquid, a rising meniscus clipped to the well -->
+  <g clip-path="url(#well)">
+    <path d="M100 272 C 160 246 212 246 256 266 C 300 286 352 286 412 260 L 412 400 L 100 400 Z"
+          fill="url(#litmus)" />
+    <path d="M100 272 C 160 246 212 246 256 266 C 300 286 352 286 412 260"
+          stroke="#f4ece3" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.92" />
+  </g>
+
+  <!-- specimen well ring -->
+  <circle cx="256" cy="256" r="150" stroke="#f4f1e9" stroke-width="26" fill="none" />
+
+  <!-- reading mark on the surface -->
+  <circle cx="256" cy="266" r="17" fill="#f7f4ef" />
+</svg>
