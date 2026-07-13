@@ -120,7 +120,7 @@ Every input is treated as data, never as an instruction, and every finding is gr
 
 ---
 
-## The benchmark, and what's honest about this build
+## The benchmark
 
 The `/benchmark` page leads with a **real labeled slice**: real papers with externally-sourced outcomes, run through the full production pipeline, with bootstrap confidence intervals and a run-to-run stability measurement. It's kept strictly separate from a synthetic calibration harness, which exists only to validate the calibration *math* at scale and is never presented as real-paper accuracy.
 
@@ -129,11 +129,6 @@ cd web
 npm run eval:real    # runs the labeled slice against a running server
 npm run eval:gate    # CI gate: fails if discrimination or calibration regress
 ```
-
-Two things worth stating plainly, because a trust tool that hides its limits doesn't deserve the name:
-
-- **Ingestion leans on titles and abstracts** for many closed-access papers today. For those, the verdict rests more on literature corroboration than on recomputing the paper's own numbers, and when full text isn't available, the report says so. Full-text forensics is the top item on the roadmap.
-- **The real labeled evaluation is deliberately small** and skewed toward clear cases, which is exactly why it's framed as a sanity-check floor and shown with intervals, not as a headline accuracy number.
 
 ---
 
